@@ -2,17 +2,17 @@
 #include "string.h"
 
 typedef struct {
-  float accel[3]; // raw value
-  float gyro[3]; // raw value
-  float mag[3]; // raw value
+  float accel[3]; // raw accel value
+  float gyro[3]; // raw gyro value
+  float mag[3]; // raw mag value
 
-  float prev_accel[3]; // raw value
-  float prev_gyro[3]; // raw value
-  float prev_mag[3]; // raw value
+  float prev_accel[3]; // previous accel value
+  float prev_gyro[3]; // raw gyro value
+  float prev_mag[3]; // raw mag value
 
-  float filtered_accel[3]; // raw value
-  float filtered_gyro[3]; // raw value
-  float filtered_mag[3]; // raw value
+  float filtered_accel[3]; // filtered accel value
+  float filtered_gyro[3]; // filtered gyro value
+  float filtered_mag[3]; // filtered mag value
 }imu_data;
 
 // an MPU9250 object with the MPU-9250 sensor on I2C bus 0 with address 0x68
