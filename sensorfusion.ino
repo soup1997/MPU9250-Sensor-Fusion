@@ -7,8 +7,8 @@ typedef struct {
   float mag[3]; // raw mag value
 
   float prev_accel[3]; // previous accel value
-  float prev_gyro[3]; // raw gyro value
-  float prev_mag[3]; // raw mag value
+  float prev_gyro[3]; // previous gyro value
+  float prev_mag[3]; // previous mag value
 
   float filtered_accel[3]; // filtered accel value
   float filtered_gyro[3]; // filtered gyro value
