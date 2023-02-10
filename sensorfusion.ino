@@ -18,8 +18,11 @@ typedef struct {
 // an MPU9250 object with the MPU-9250 sensor on I2C bus 0 with address 0x68
 MPU9250 IMU(Wire, 0x68);
 imu_data mpu9250;
+
 int status;
-char* print_string[3] = {"Accel, Gyro, Mag X", "Accel, Gyro, Mag Y", "Accel, Gyro, Mag Z"};
+char* raw_string[3] = {"raw Accel/Gyro/Mag X", "raw Accel/Gyro/Mag Y", "raw Accel/Gyro/Mag Z"};
+char* filtered_string[3] = {"filtered Accel/Gyro/Mag X", "filtered Accel/Gyro/Mag Y", "filtered Accel/Gyro/Mag Z"};
+
 static float alpha = 0.8;
 
 void get_raw_data(imu_data *imu)
@@ -58,8 +61,17 @@ void serial_print(imu_data *imu)
 {
   for(int i = 0; i < 3; i++)
   {
-    Serial.println(print_string[i]);
+    Serial.println(raw_string[i]);
 
+    Serial.print(imu->accel[i], 6);
+    Serial.print("\t");
+    Serial.print(imu->gyro[i], 6);
+    Serial.print("\t");
+    Serial.print(imu->mag[i], 6);
+    Serial.print("\t");
+    Serial.println("\n");
+
+    Serial.println(filtered_string[i]);
     Serial.print(imu->filtered_accel[i], 6);
     Serial.print("\t");
     Serial.print(imu->filtered_gyro[i], 6);
