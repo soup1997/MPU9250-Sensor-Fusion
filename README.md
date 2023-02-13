@@ -1,5 +1,5 @@
 # MPU9250 Sensor Fusion
-* Sensor fusion into extended kalman filter(EKF) to calculate yaw angle with gyroscope and magnetometer
+* Sensor fusion into extended kalman filter(EKF) to calculate yaw angle with gyrosensor and magnetometer
 ## Wiring Diagram
 ![image](https://user-images.githubusercontent.com/86957779/217463645-35ba5197-f327-4761-a887-9932343e454b.png)
 
