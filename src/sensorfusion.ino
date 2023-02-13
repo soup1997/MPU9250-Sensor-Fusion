@@ -30,10 +30,10 @@ float gyro_yaw = 0.0;
 float dt = (1.0 / 50.0); // 50Hz
 
 // yaw calculation parameters(Magnetometer)
-double mag_yaw = 0.0;
+float mag_yaw = 0.0;
 
 // lowpass filter parameter
-static float alpha = 0.8;
+const float alpha = 0.8;
 
 // init
 MPU9250 IMU(Wire, 0x68);
@@ -74,10 +74,10 @@ void lpf(imu_data *imu) // rad/sec
 
 void euler_gyro(imu_data *imu)
 {
-  double sinPhi = sin(prevPhi);
-  double cosPhi = cos(prevPhi);
-  double cosTheta = cos(prevTheta);
-  double tanTheta = tan(prevTheta);
+  float sinPhi = sin(prevPhi);
+  float cosPhi = cos(prevPhi);
+  float cosTheta = cos(prevTheta);
+  float tanTheta = tan(prevTheta);
 
   // Gyro to Euler Angle
   phi = prevPhi + dt*(imu->filtered_gyro[0] + imu->filtered_gyro[1]*sinPhi*tanTheta + imu->filtered_gyro[2]*cosPhi*tanTheta);
