@@ -99,10 +99,8 @@ void euler_mag(imu_data *imu)
 
 void serial_print(imu_data *imu)
 {
-  Serial.print("Gyro yaw: ");
   Serial.print(gyro_yaw);
-
-  Serial.print("Mag yaw: ");
+  Serial.print("\t");
   Serial.println(mag_yaw);
 }
 
@@ -154,6 +152,8 @@ void setup() {
     
     // set struct variables to 0
     set_memory(&mpu9250);
+    Serial.print("Gyro Yaw\t");
+    Serial.print("Mag Yaw\n");
   }
 }
 
