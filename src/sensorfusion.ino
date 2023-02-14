@@ -23,9 +23,6 @@ typedef struct {
 float prevPhi = 0.0;
 float prevTheta = 0.0;
 float prevPsi = 0.0;
-float phi = 0.0;
-float theta = 0.0;
-float psi = 0.0;
 float gyro_yaw = 0.0;
 float dt = (1.0 / 50.0); // 50Hz
 
@@ -33,7 +30,7 @@ float dt = (1.0 / 50.0); // 50Hz
 float mag_yaw = 0.0;
 
 // lowpass filter parameter
-const float alpha = 0.8;
+const float alpha = 0.65;
 
 // init
 MPU9250 IMU(Wire, 0x68);
@@ -74,15 +71,19 @@ void lpf(imu_data *imu) // rad/sec
 
 void euler_gyro(imu_data *imu)
 {
+  float phi = 0.0;
+  float theta = 0.0;
+  float psi = 0.0;
+
   float sinPhi = sin(prevPhi);
   float cosPhi = cos(prevPhi);
   float cosTheta = cos(prevTheta);
   float tanTheta = tan(prevTheta);
 
   // Gyro to Euler Angle
-  phi = prevPhi + dt*(imu->filtered_gyro[0] + imu->filtered_gyro[1]*sinPhi*tanTheta + imu->filtered_gyro[2]*cosPhi*tanTheta);
-  theta = prevTheta + dt*(imu->filtered_gyro[1]*cosPhi - imu->filtered_gyro[2]*sinPhi);
-  psi = prevPsi + dt*(imu->filtered_gyro[1]*sinPhi/cosTheta + imu->filtered_gyro[2]*cosPhi/cosTheta);
+  phi = prevPhi + dt*(imu->filtered_gyro[0] + (imu->filtered_gyro[1]*sinPhi*tanTheta) + (imu->filtered_gyro[2]*cosPhi*tanTheta));
+  theta = prevTheta + dt*((imu->filtered_gyro[1]*cosPhi) - (imu->filtered_gyro[2]*sinPhi));
+  psi = prevPsi + dt*((imu->filtered_gyro[1]*sinPhi/cosTheta) + (imu->filtered_gyro[2]*cosPhi / cosTheta));
   
   prevPhi = phi;
   prevTheta = theta;
@@ -93,7 +94,7 @@ void euler_gyro(imu_data *imu)
 
 void euler_mag(imu_data *imu)
 {
-  mag_yaw = atan2(imu->filtered_mag[1], imu->filtered_mag[0]) * (180.0 / PI); // radian to degree
+  mag_yaw = (atan2(imu->filtered_mag[1], imu->filtered_mag[0])) * (180.0 / PI); // radian to degree
 }
 
 void serial_print(imu_data *imu)
