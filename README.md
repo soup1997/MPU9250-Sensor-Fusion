@@ -1,12 +1,26 @@
 # MPU9250 Sensor Fusion
-* Sensor fusion into EKF to calculate yaw angle with gyrosensor and magnetometer
-## Wiring Diagram
+This is the repository for the method to fuse IMU(Gyrosensor, Accelerometer, Magnetometer) by using extended kalman filter.
+## Experiment environment
+
+|Equiment|Name|
+|---|---|
+|IMU|MPU-9250|
+|Main Controller|Arduino-UNO|
+
+the wiring for the sensor is arraged as shown in the figure below.
 ![image](https://user-images.githubusercontent.com/86957779/217463645-35ba5197-f327-4761-a887-9932343e454b.png)
 
 ## System Diagram
-![image](https://user-images.githubusercontent.com/86957779/219295380-16374901-a69d-4ff4-8073-7838eea7636f.png)
+<div align = center>
 
-### Needs to be tested
-1) Q와 R 파라미터 조절
-2) 가속도 센서 데이터 추가
-3) Simulink 내부적으로 신호를 합치거나, 간단화 하는 방법
+
+![image](https://user-images.githubusercontent.com/86957779/220029536-03696811-007e-41d9-b849-2770a3458d28.png)
+![image](https://user-images.githubusercontent.com/86957779/220029402-62ce5fb9-b6ca-4dc5-a16c-997808d29fbc.png)
+
+
+</div>
+
+* **Euler Gyro**: Moudle that receives angular velocity and calculates the euler angle.
+* **Euler Accel**: Modle that receives acceleration from accelerometer and calculates euler angle rates.
+* **Extended Kalman Filter**: Module that calculates euler angle by combining data of a gyro sensor and an accelerometer.
+* **Tilt Compensation**: Module that calculates heading angle(yaw) by receiving output of extended kalman filter(roll, pitch) and magnetometer sensing data.
