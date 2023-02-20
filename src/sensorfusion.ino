@@ -26,9 +26,6 @@ float prevPsi = 0.0;
 float gyro_yaw = 0.0;
 float dt = (1.0 / 50.0); // 50Hz
 
-// yaw calculation parameters(Magnetometer)
-float mag_yaw = 0.0;
-
 // lowpass filter parameter
 const float alpha = 0.65;
 
@@ -92,19 +89,27 @@ void euler_gyro(imu_data *imu)
   gyro_yaw = psi * (180.0 / PI); // radian to degree
 }
 
-void euler_mag(imu_data *imu)
-{
-  mag_yaw = (atan2(imu->filtered_mag[1], imu->filtered_mag[0])) * (180.0 / PI); // radian to degree
-}
-
 void serial_print(imu_data *imu)
 {
+  for(int i=0; i <3; i++)
+  {
+    Serial.print(imu->filtered_accel[i]);
+    Serial.print("\t");
+  }
+
   for(int i=0; i <3; i++)
   {
     Serial.print(imu->filtered_gyro[i]);
     Serial.print("\t");
   }
-  Serial.println(mag_yaw);
+  
+  for(int i=0; i <3; i++)
+  {
+    Serial.print(imu->filtered_mag[i]);
+    Serial.print("\t");
+  }
+
+  Serial.print("\n");
 }
 
 void set_memory(imu_data *imu)
@@ -152,11 +157,14 @@ void setup() {
     The sensor should be rotated in a figure 8 motion until complete */
     IMU.calibrateGyro();
     IMU.calibrateMag();
+    IMU.calibrateAccel();
     
     // set struct variables to 0
     set_memory(&mpu9250);
+    Serial.print("Ax\tAy\tAz\t");
     Serial.print("p\tq\tr\t");
-    Serial.print("Mag Yaw\n");
+    Serial.print("mx\tmy\tmz\t");
+
   }
 }
 
@@ -164,9 +172,7 @@ void loop() {
   IMU.readSensor(); // read raw data
   get_raw_data(&mpu9250); // allocate raw data to struct
   lpf(&mpu9250); // filtered data
-
   euler_gyro(&mpu9250);
-  euler_mag(&mpu9250);
 
   serial_print(&mpu9250); // print yaw_data
 }

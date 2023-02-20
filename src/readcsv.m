@@ -1,9 +1,14 @@
-T = readtable("imu_data.csv");
+T = readtable("imu_total.csv");
 
-p = T{:, 1};
-q = T{:, 2};
-r = T{:, 3};
-mag_yaw = T{:, 4};
+ax = T{:, 1};
+ay = T{:, 2};
+az = T{:, 3};
+p = T{:, 4};
+q = T{:, 5};
+r = T{:, 6};
+mx = T{:, 7};
+my = T{:, 8};
+mz = T{:, 9};
 
 time_table = zeros(length(p), 1);
 
@@ -18,7 +23,15 @@ for k=1:length(p)
 
 end
 
+ax = [time_table, ax];
+ay = [time_table, ay];
+az = [time_table, az];
+
 p = [time_table, p];
 q = [time_table, q];
 r = [time_table, r];
-mag_yaw = [time_table, mag_yaw];
+
+mx = [time_table, mx];
+my = [time_table, my];
+mz = [time_talbe, mz];
+
