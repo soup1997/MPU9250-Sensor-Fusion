@@ -21,7 +21,7 @@ the wiring for the sensor is arraged as shown in the image below.
 </div>
 
 * **Euler Gyro**: Moudle that receives angular velocity and calculates the euler angle.
-* **Euler Accel**: Modle that receives acceleration from accelerometer and calculates euler angle rates.
+* **Euler Accel**: Module that receives acceleration from accelerometer and calculates euler angle rates.
 * **Extended Kalman Filter**: Module that calculates euler angle by combining data of a gyro sensor and an accelerometer.
 * **Tilt Compensation**: Module that calculates heading angle(yaw) by receiving output of extended kalman filter(roll, pitch) and magnetometer sensing data.
 
